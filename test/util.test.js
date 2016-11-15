@@ -1,4 +1,7 @@
-const {point, multiPoint, lineString, multiLineString, polygon, multiPolygon} = require('./util');
+const {
+  point, multiPoint, lineString, multiLineString, polygon, multiPolygon,
+  geometryCollection, feature, featureCollection
+} = require('./util');
 
 describe('point()', () => {
 
@@ -90,6 +93,39 @@ describe('multiPolygon()', () => {
         });
       });
     });
+  });
+
+});
+
+describe('geometryCollection()', () => {
+
+  it('creates a GeoJSON GeometryCollection', () => {
+    const geometries = [point(), lineString(10), polygon(2)];
+    const collection = geometryCollection(geometries);
+    expect(collection.type).toBe('GeometryCollection');
+    expect(collection.geometries).toEqual(geometries);
+  });
+
+});
+
+describe('feature()', () => {
+
+  it('creates a GeoJSON Feature', () => {
+    const geometry = point();
+    const obj = feature(geometry);
+    expect(obj.type).toBe('Feature');
+    expect(obj.geometry).toEqual(geometry);
+  });
+
+});
+
+describe('featureCollection()', () => {
+
+  it('creates a GeoJSON FeatureCollection', () => {
+    const features = [feature(point()), feature(lineString()), feature(polygon())];
+    const collection = featureCollection(features);
+    expect(collection.type).toBe('FeatureCollection');
+    expect(collection.features).toEqual(features);
   });
 
 });

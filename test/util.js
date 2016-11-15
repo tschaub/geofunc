@@ -36,9 +36,27 @@ const multiPolygon = length => ({
   coordinates: arrayOf(length, () => arrayOf(length, () => arrayOf(length, coordinate)))
 });
 
+const geometryCollection = geometries => ({
+  type: 'GeometryCollection',
+  geometries: geometries
+});
+
+const feature = geometry => ({
+  type: 'Feature',
+  geometry: geometry
+});
+
+const featureCollection = features => ({
+  type: 'FeatureCollection',
+  features: features
+});
+
 exports.point = point;
 exports.multiPoint = multiPoint;
 exports.lineString = lineString;
 exports.multiLineString = multiLineString;
 exports.polygon = polygon;
 exports.multiPolygon = multiPolygon;
+exports.geometryCollection = geometryCollection;
+exports.feature = feature;
+exports.featureCollection = featureCollection;
