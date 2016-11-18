@@ -60,3 +60,4 @@ exports.multiPolygon = multiPolygon;
 exports.geometryCollection = geometryCollection;
 exports.feature = feature;
 exports.featureCollection = featureCollection;
+exports.arrayOf = arrayOf;
