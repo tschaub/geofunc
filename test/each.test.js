@@ -2,6 +2,43 @@ const each = require('../lib/each');
 const util = require('./util');
 
 describe('each()', () => {
+  it('allows visitors to be registered for multiple types', () => {
+    const collection = util.geometryCollection([
+      util.point(),
+      util.lineString(10),
+      util.point()
+    ]);
+
+    const counts = {
+      Point: 0,
+      LineString: 0
+    };
+
+    const args = [];
+
+    const process = each({
+      Point: point => {
+        ++counts.Point;
+        args.push(point);
+      },
+      LineString: line => {
+        ++counts.LineString;
+        args.push(line);
+      }
+    });
+
+    expect(process).toBeInstanceOf(Function);
+
+    process(collection);
+    expect(counts.Point).toBe(2);
+    expect(counts.LineString).toBe(1);
+    expect(args).toEqual([
+      collection.geometries[0],
+      collection.geometries[1],
+      collection.geometries[2]
+    ]);
+  });
+
   it('creates a visitor for Point geometries in a GeometryCollection', () => {
     const collection = util.geometryCollection([
       util.point(),
