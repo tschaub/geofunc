@@ -2,7 +2,6 @@ const each = require('../lib/each');
 const util = require('./util');
 
 describe('each()', () => {
-
   it('creates a visitor for Point geometries in a GeometryCollection', () => {
     const collection = util.geometryCollection([
       util.point(),
@@ -151,5 +150,4 @@ describe('each()', () => {
     eachCoordinate(features);
     expect(count).toBe(27);
   });
-
 });

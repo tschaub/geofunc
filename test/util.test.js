@@ -1,21 +1,25 @@
 const {
-  point, multiPoint, lineString, multiLineString, polygon, multiPolygon,
-  geometryCollection, feature, featureCollection
+  point,
+  multiPoint,
+  lineString,
+  multiLineString,
+  polygon,
+  multiPolygon,
+  geometryCollection,
+  feature,
+  featureCollection
 } = require('./util');
 
 describe('point()', () => {
-
   it('creates a GeoJSON Point', () => {
     const obj = point();
     expect(obj.type).toBe('Point');
     expect(Array.isArray(obj.coordinates)).toBe(true);
     expect(obj.coordinates.length).toBe(2);
   });
-
 });
 
 describe('multiPoint()', () => {
-
   it('creates a GeoJSON MultiPoint', () => {
     const length = 10;
     const obj = multiPoint(length);
@@ -26,11 +30,9 @@ describe('multiPoint()', () => {
       expect(coordinate.length).toBe(2);
     });
   });
-
 });
 
 describe('lineString()', () => {
-
   it('creates a GeoJSON LineString', () => {
     const length = 15;
     const obj = lineString(length);
@@ -41,11 +43,9 @@ describe('lineString()', () => {
       expect(coordinate.length).toBe(2);
     });
   });
-
 });
 
 describe('multiLineString()', () => {
-
   it('creates a GeoJSON MultiLineString', () => {
     const length = 20;
     const obj = multiLineString(length);
@@ -58,11 +58,9 @@ describe('multiLineString()', () => {
       });
     });
   });
-
 });
 
 describe('polygon()', () => {
-
   it('creates a GeoJSON Polygon', () => {
     const length = 3;
     const obj = polygon(length);
@@ -75,11 +73,9 @@ describe('polygon()', () => {
       });
     });
   });
-
 });
 
 describe('multiPolygon()', () => {
-
   it('creates a GeoJSON MultiPolygon', () => {
     const length = 3;
     const obj = multiPolygon(length);
@@ -94,38 +90,35 @@ describe('multiPolygon()', () => {
       });
     });
   });
-
 });
 
 describe('geometryCollection()', () => {
-
   it('creates a GeoJSON GeometryCollection', () => {
     const geometries = [point(), lineString(10), polygon(2)];
     const collection = geometryCollection(geometries);
     expect(collection.type).toBe('GeometryCollection');
     expect(collection.geometries).toEqual(geometries);
   });
-
 });
 
 describe('feature()', () => {
-
   it('creates a GeoJSON Feature', () => {
     const geometry = point();
     const obj = feature(geometry);
     expect(obj.type).toBe('Feature');
     expect(obj.geometry).toEqual(geometry);
   });
-
 });
 
 describe('featureCollection()', () => {
-
   it('creates a GeoJSON FeatureCollection', () => {
-    const features = [feature(point()), feature(lineString()), feature(polygon())];
+    const features = [
+      feature(point()),
+      feature(lineString()),
+      feature(polygon())
+    ];
     const collection = featureCollection(features);
     expect(collection.type).toBe('FeatureCollection');
     expect(collection.features).toEqual(features);
   });
-
 });

@@ -1,4 +1,3 @@
-
 const arrayOf = (length, func) => Array.from({length}, func);
 
 const coordinate = () => [
@@ -33,7 +32,9 @@ const polygon = length => ({
 
 const multiPolygon = length => ({
   type: 'MultiPolygon',
-  coordinates: arrayOf(length, () => arrayOf(length, () => arrayOf(length, coordinate)))
+  coordinates: arrayOf(length, () =>
+    arrayOf(length, () => arrayOf(length, coordinate))
+  )
 });
 
 const geometryCollection = geometries => ({
