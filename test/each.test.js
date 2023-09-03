@@ -1,30 +1,30 @@
-const each = require('../lib/each');
-const util = require('./util');
+import * as util from './util.js';
+import {each} from '../lib/each.js';
 
 describe('each()', () => {
   it('allows visitors to be registered for multiple types', () => {
     const collection = util.geometryCollection([
       util.point(),
       util.lineString(10),
-      util.point()
+      util.point(),
     ]);
 
     const counts = {
       Point: 0,
-      LineString: 0
+      LineString: 0,
     };
 
     const args = [];
 
     const process = each({
-      Point: point => {
+      Point: (point) => {
         ++counts.Point;
         args.push(point);
       },
-      LineString: line => {
+      LineString: (line) => {
         ++counts.LineString;
         args.push(line);
-      }
+      },
     });
 
     expect(process).toBeInstanceOf(Function);
@@ -35,7 +35,7 @@ describe('each()', () => {
     expect(args).toEqual([
       collection.geometries[0],
       collection.geometries[1],
-      collection.geometries[2]
+      collection.geometries[2],
     ]);
   });
 
@@ -43,12 +43,12 @@ describe('each()', () => {
     const collection = util.geometryCollection([
       util.point(),
       util.lineString(10),
-      util.point()
+      util.point(),
     ]);
 
     let count = 0;
     const args = [];
-    const eachPoint = each('Point', point => {
+    const eachPoint = each('Point', (point) => {
       ++count;
       args.push(point);
     });
@@ -62,7 +62,7 @@ describe('each()', () => {
 
   it('creates a visitor for Point geometries in a Feature', () => {
     let count = 0;
-    const eachPoint = each('Point', point => ++count);
+    const eachPoint = each('Point', (point) => ++count);
 
     eachPoint(util.feature(util.point()));
     expect(count).toBe(1);
@@ -74,7 +74,7 @@ describe('each()', () => {
   it('creates a visitor for Point geometries in a FeatureCollection', () => {
     let count = 0;
     const args = [];
-    const eachPoint = each('Point', point => {
+    const eachPoint = each('Point', (point) => {
       ++count;
       args.push(point);
     });
@@ -83,14 +83,14 @@ describe('each()', () => {
       util.feature(util.point()),
       util.feature(util.polygon(3)),
       util.feature(util.point()),
-      util.feature(util.lineString(10))
+      util.feature(util.lineString(10)),
     ]);
 
     eachPoint(collection);
     expect(count).toBe(2);
     expect(args).toEqual([
       collection.features[0].geometry,
-      collection.features[2].geometry
+      collection.features[2].geometry,
     ]);
   });
 
@@ -98,7 +98,7 @@ describe('each()', () => {
     const count = 10;
     const lines = util.arrayOf(count, () => util.lineString(5));
     const geometries = [];
-    lines.forEach(line => {
+    lines.forEach((line) => {
       geometries.push(line);
       geometries.push(util.point());
       geometries.push(util.polygon(3));
@@ -107,7 +107,7 @@ describe('each()', () => {
     const collection = util.geometryCollection(geometries);
 
     let got = 0;
-    const eachLine = each('LineString', line => ++got);
+    const eachLine = each('LineString', (line) => ++got);
 
     eachLine(collection);
     expect(got).toBe(count);
@@ -115,7 +115,7 @@ describe('each()', () => {
 
   it('creates a visitor for Polygon geometries in a GeometryCollection', () => {
     let count = 0;
-    const eachPolygon = each('Polygon', polygon => ++count);
+    const eachPolygon = each('Polygon', (polygon) => ++count);
 
     const collection = util.geometryCollection([
       util.point(),
@@ -123,7 +123,7 @@ describe('each()', () => {
       util.lineString(10),
       util.polygon(2),
       util.point(),
-      util.polygon(1)
+      util.polygon(1),
     ]);
 
     eachPolygon(collection);
@@ -132,7 +132,7 @@ describe('each()', () => {
 
   it('creates a visitor for all geometry types in a GeometryCollection', () => {
     let count = 0;
-    const eachGeometry = each('Geometry', geometry => ++count);
+    const eachGeometry = each('Geometry', (geometry) => ++count);
 
     const collection = util.geometryCollection([
       util.point(),
@@ -143,7 +143,7 @@ describe('each()', () => {
       util.polygon(2),
       util.point(),
       util.point(),
-      util.polygon(1)
+      util.polygon(1),
     ]);
 
     eachGeometry(collection);
@@ -152,7 +152,7 @@ describe('each()', () => {
 
   it('creates a visitor for all geometry types', () => {
     let count = 0;
-    const eachGeometry = each('Geometry', geometry => ++count);
+    const eachGeometry = each('Geometry', (geometry) => ++count);
 
     eachGeometry(util.point());
     expect(count).toBe(1);
@@ -160,7 +160,7 @@ describe('each()', () => {
 
   it('creates a visitor for all coordintes in a LineString', () => {
     let count = 0;
-    const eachCoordinate = each('Coordinate', coordinate => {
+    const eachCoordinate = each('Coordinate', (coordinate) => {
       ++count;
       expect(coordinate).toBeInstanceOf(Array);
       expect(coordinate.length).toBe(2);
@@ -173,7 +173,7 @@ describe('each()', () => {
 
   it('creates a visitor for all coordintes in a FeatureCollection', () => {
     let count = 0;
-    const eachCoordinate = each('Coordinate', coordinate => {
+    const eachCoordinate = each('Coordinate', (coordinate) => {
       ++count;
       expect(coordinate).toBeInstanceOf(Array);
       expect(coordinate.length).toBe(2);
@@ -182,7 +182,7 @@ describe('each()', () => {
     const features = util.featureCollection([
       util.point(), // 1 coordinate
       util.lineString(10), // 10 coordinates
-      util.polygon(4) // 16 coordinates
+      util.polygon(4), // 16 coordinates
     ]);
     eachCoordinate(features);
     expect(count).toBe(27);

@@ -1,14 +1,14 @@
-const {
-  point,
-  multiPoint,
+import {
+  feature,
+  featureCollection,
+  geometryCollection,
   lineString,
   multiLineString,
-  polygon,
+  multiPoint,
   multiPolygon,
-  geometryCollection,
-  feature,
-  featureCollection
-} = require('./util');
+  point,
+  polygon,
+} from './util.js';
 
 describe('point()', () => {
   it('creates a GeoJSON Point', () => {
@@ -26,7 +26,7 @@ describe('multiPoint()', () => {
     expect(obj.type).toBe('MultiPoint');
     expect(Array.isArray(obj.coordinates)).toBe(true);
     expect(obj.coordinates.length).toBe(length);
-    obj.coordinates.forEach(coordinate => {
+    obj.coordinates.forEach((coordinate) => {
       expect(coordinate.length).toBe(2);
     });
   });
@@ -39,7 +39,7 @@ describe('lineString()', () => {
     expect(obj.type).toBe('LineString');
     expect(Array.isArray(obj.coordinates)).toBe(true);
     expect(obj.coordinates.length).toBe(length);
-    obj.coordinates.forEach(coordinate => {
+    obj.coordinates.forEach((coordinate) => {
       expect(coordinate.length).toBe(2);
     });
   });
@@ -52,8 +52,8 @@ describe('multiLineString()', () => {
     expect(obj.type).toBe('MultiLineString');
     expect(Array.isArray(obj.coordinates)).toBe(true);
     expect(obj.coordinates.length).toBe(length);
-    obj.coordinates.forEach(lineCoordinates => {
-      lineCoordinates.forEach(coordinate => {
+    obj.coordinates.forEach((lineCoordinates) => {
+      lineCoordinates.forEach((coordinate) => {
         expect(coordinate.length).toBe(2);
       });
     });
@@ -67,8 +67,8 @@ describe('polygon()', () => {
     expect(obj.type).toBe('Polygon');
     expect(Array.isArray(obj.coordinates)).toBe(true);
     expect(obj.coordinates.length).toBe(length);
-    obj.coordinates.forEach(ringCoordinates => {
-      ringCoordinates.forEach(coordinate => {
+    obj.coordinates.forEach((ringCoordinates) => {
+      ringCoordinates.forEach((coordinate) => {
         expect(coordinate.length).toBe(2);
       });
     });
@@ -82,9 +82,9 @@ describe('multiPolygon()', () => {
     expect(obj.type).toBe('MultiPolygon');
     expect(Array.isArray(obj.coordinates)).toBe(true);
     expect(obj.coordinates.length).toBe(length);
-    obj.coordinates.forEach(polyCoordinates => {
-      polyCoordinates.forEach(ringCoordinates => {
-        ringCoordinates.forEach(coordinate => {
+    obj.coordinates.forEach((polyCoordinates) => {
+      polyCoordinates.forEach((ringCoordinates) => {
+        ringCoordinates.forEach((coordinate) => {
           expect(coordinate.length).toBe(2);
         });
       });
@@ -115,7 +115,7 @@ describe('featureCollection()', () => {
     const features = [
       feature(point()),
       feature(lineString()),
-      feature(polygon())
+      feature(polygon()),
     ];
     const collection = featureCollection(features);
     expect(collection.type).toBe('FeatureCollection');
