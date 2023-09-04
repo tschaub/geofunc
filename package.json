@@ -3,7 +3,9 @@
   "version": "0.3.0",
   "main": "main.js",
   "files": [
-    "main.js"
+    "main.js",
+    "main.d.ts",
+    "main.d.ts.map"
   ],
   "type": "module",
   "scripts": {
@@ -12,7 +14,9 @@
     "pretest": "npm run lint && npm run typecheck",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test-watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
-    "start": "jest --watch"
+    "start": "jest --watch",
+    "generate-types": "rm *.d.ts && npx tsc --declaration --declarationMap --emitDeclarationOnly --noEmit false",
+    "preversion": "npm run generate-types"
   },
   "devDependencies": {
     "@jest/globals": "^29.6.4",
