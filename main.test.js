@@ -85,7 +85,7 @@ function multiPolygon(length) {
   return {
     type: 'MultiPolygon',
     coordinates: arrayOf(length, () =>
-      arrayOf(length, () => arrayOf(length, coordinate))
+      arrayOf(length, () => arrayOf(length, coordinate)),
     ),
   };
 }
