@@ -23,7 +23,7 @@
     "@types/geojson": "^7946.0.10",
     "eslint": "^9.21.0",
     "eslint-config-tschaub": "^15.3.1",
-    "jest": "^29.6.4",
+    "jest": "^30.0.5",
     "typescript": "^5.2.2"
   }
 }
